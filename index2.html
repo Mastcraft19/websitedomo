@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ChillBase</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+/* Allgemeine Stile */
+body {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #000;
+    color: #00ff00;
+    overflow-x: hidden;
+}
+
+/* Header */
+header {
+    background-color: #000;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 10px rgba(0, 255, 0, 0.5);
+    position: sticky;
+    top: 0;
+    z-index: 1;
+}
+
+header h1 {
+    font-size: 2em;
+    font-weight: 700;
+    margin: 0;
+    color: #00ff00;
+    text-shadow: 2px 2px 4px rgba(0, 255, 0, 0.5);
+}
+
+/* Update-Informationen */
+.update-info {
+    background-color: #000;
+    padding: 10px 20px;
+    border-radius: 10px;
+    margin: 20px;
+    text-align: center;
+    font-size: 1.2em;
+    box-shadow: 0 2px 5px rgba(0, 255, 0, 0.3);
+    color: #00ff00;
+}
+
+/* Suchleiste */
+.search-bar {
+    display: flex;
+    align-items: center;
+    max-width: 600px;
+    margin-left: 20px;
+}
+
+.search-bar input[type="text"] {
+    padding: 10px 15px;
+    font-size: 16px;
+    border-radius: 20px;
+    border: none;
+    width: 100%;
+    background-color: #000;
+    color: #00ff00;
+    box-shadow: 0 2px 5px rgba(0, 255, 0, 0.3);
+    transition: all 0.3s;
+}
+
+.search-bar input[type="text"]:focus {
+    outline: none;
+    box-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
+}
+
+.search-bar button {
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 20px;
+    background-color: #00ff00;
+    color: #000;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    box-shadow: 0 2px 5px rgba(0, 255, 0, 0.3);
+    margin-left: 10px;
+}
+
+.search-bar button:hover {
+    background-color: #0f0;
+}
+
+/* Filmbereich */
+.movie-section {
+    padding: 30px 20px;
+}
+
+.movie-section h2 {
+    font-size: 2em;
+    margin-bottom: 30px;
+    font-weight: 700;
+    text-shadow: 2px 2px 4px rgba(0, 255, 0, 0.5);
+    position: relative;
+    display: inline-block;
+    color: #00ff00;
+}
+
+.movie-section h2::after {
+    content: "";
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background-color: #00ff00;
+}
+
+/* Filmcontainer */
+.movie-container {
+    display: flex;
+    overflow-x: auto;
+    gap: 30px;
+    padding-bottom: 20px;
+    scrollbar-width: thin;
+    scrollbar-color: #00ff00 #000;
+}
+
+.movie-container::-webkit-scrollbar {
+    height: 12px;
+}
+
+.movie-container::-webkit-scrollbar-track {
+    background: #000;
+}
+
+.movie-container::-webkit-scrollbar-thumb {
+    background-color: #00ff00;
+    border-radius: 6px;
+    border: 3px solid #000;
+}
+
+.movie-container::-webkit-scrollbar-thumb:hover {
+    background-color: #0f0;
+}
+
+/* Filmvorschaubild */
+.movie-thumbnail {
+    cursor: pointer;
+    transition: transform 0.3s, box-shadow 0.3s;
+    position: relative;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 2px 10px rgba(0, 255, 0, 0.5);
+    min-width: 200px;
+    max-width: 200px;
+    flex: 0 0 auto;
+}
+
+.movie-thumbnail img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 10px;
+    transition: transform 0.3s;
+}
+
+.movie-thumbnail:hover img {
+    transform: scale(1.05);
+}
+
+.movie-thumbnail span {
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: rgba(0, 255, 0, 0.7);
+    color: #000;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 16px;
+    font-weight: 700;
+    text-align: center;
+    text-shadow: 1px 1px 2px rgba(0, 255, 0, 0.5);
+}
+/* Keine Ergebnisse */
+.no-results {
+    display: none;
+    text-align: center;
+    font-size: 1.5em;
+    margin-top: 50px;
+    color: rgb(81, 184, 105);
+    font-weight: 700;
+    text-shadow: 1px 1px 2px rgba(8, 69, 15, 0.5);
+}
+
+/* Animationsstil */
+@keyframes flickerAnimation {
+    0% { opacity: 0.9; }
+    50% { opacity: 0.6; }
+    100% { opacity: 0.9; }
+}
+
+/* Animierte Hervorhebung */
+.movie-thumbnail:hover {
+    animation: flickerAnimation 0.5s infinite alternate;
+}
+/* Eingabebereich */
+.code-entry {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background-color: #000;
+    overflow: hidden;
+}
+
+/* Eingabefeld */
+.code-entry input[type="password"],
+.code-entry button {
+    padding: 15px 30px;
+    font-size: 18px;
+    border-radius: 10px;
+    border: 2px solid #00ff00;
+    background-color: #000;
+    color: #00ff00;
+    box-shadow: 0 2px 5px rgba(0, 255, 0, 0.3);
+    transition: all 0.3s;
+    width: 80%;
+    text-align: center;
+    margin-bottom: 20px;
+    outline: none;
+}
+
+/* Füge einen Hover-Effekt hinzu */
+.code-entry input[type="password"]:hover,
+.code-entry input[type="password"]:focus,
+.code-entry button:hover {
+    border-color: #0f0;
+    box-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
+}
+
+/* Flackereffekt */
+@keyframes flickerAnimation {
+    0%, 19.999%, 22%, 62.999%, 64%, 64.999%, 70%, 100% {
+        text-shadow: 0 0 4px rgba(0, 255, 0, 0.6), 
+                     0 0 10px rgba(0, 255, 0, 0.4), 
+                     0 0 20px rgba(0, 255, 0, 0.2), 
+                     0 0 30px rgba(0, 255, 0, 0.1);
+    }
+    20%, 63%, 65%, 69.999%, 71% {
+        text-shadow: none;
+    }
+}
+
+/* Animiere den Eingabetext */
+.code-entry input[type="password"],
+.code-entry button {
+    animation: flickerAnimation 2s infinite;
+}
+
+
+  </style>
+</head>
+<body>
+    <div class="code-entry" id="code-entry">
+        <input type="password" id="access-code" placeholder="Gastcode eingeben">
+        <button id="code-button">Einloggen</button>
+    </div>
+
+    <div id="main-content" style="display: none;">
+        <header>
+            <h1>ChillBase 🛋️</h1>
+            <div class="search-bar">
+                <input type="text" id="search-input" placeholder="Suchen...">
+                <button id="search-button"><i class="fa fa-search"></i></button>
+            </div>
+        </header>
+        <div class="update-info">
+            Neues Update: Verbesserte Suchfunktion und aktualisierte Filmlisten!
+        </div>
+
+        <main>
+            <div class="no-results" id="no-results">
+                Tut mir leid, es wurden keine Ergebnisse gefunden. Bitte überprüfen Sie die Rechtschreibung und versuchen Sie es erneut.
+            </div>
+
+            <div class="movie-section" id="gratis-animes">
+                <h2>Gratis Animes 🔥</h2>
+                <div class="movie-container">
+                    <div class="movie-thumbnail" data-title="Death Note " data-url="death Note.html">
+                        <img src="images/sui.jpg" alt="Bildbeschreibung">
+                        <span>Death Note</span>
+                    </div>
+                    <div class="movie-thumbnail" data-title="Monster " data-url="Monster.html">
+                        <img src="images/Monster.jpg" alt="Bildbeschreibung">
+                        <span>Monster</span>
+                    </div>
+                    <div class="movie-thumbnail" data-title="Code Geass " data-url="info.html">
+                        <img src="images/code geass.jpg" alt="Bildbeschreibung">
+                        <span>Code Geass</span>
+                    </div>
+                    <div class="movie-thumbnail" data-title="Hunter X Hunter " data-url="info.html">
+                        <img src="images/Hunter X Hunter.jpg" alt="Bildbeschreibung">
+                        <span>Hunter X Hunter</span>
+                    </div>
+                    <div class="movie-thumbnail" data-title="Frieren " data-url="info.html">
+                        <img src="images/Frieren.jpg" alt="Bildbeschreibung">
+                        <span>Frieren</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="movie-section" id="vip-animes">
+                <h2>VIP Animes 👑</h2>
+                <div class="movie-container">
+                    <div class="movie-thumbnail" data-title="Jujutsu Kaisen " data-url="keinvip.html">
+                        <img src="images/Jujutsu Kaisen.jpg" alt="Bildbeschreibung">
+                       <span>Jujutsu Kaisen</span>
+                   </div>
+                   <div class="movie-thumbnail" data-title="Hajime " data-url="keinvip.html">
+                    <img src="images/Hajime.jpg" alt="Bildbeschreibung">
+                       <span>Hajime</span>
+                   </div>
+                   <div class="movie-thumbnail" data-title="Usagi Drop " data-url="keinvip.html">
+                    <img src="images/Usagi Drop.jpg" alt="Bildbeschreibung">
+                       <span>Usagi Drop</span>
+                   </div>
+                   <div class="movie-thumbnail" data-title="Mushishi Zoku " data-url="keinvip.html">
+                    <img src="images/Mushishi Zoku.jpg" alt="Bildbeschreibung">
+                       <span>Mushishi Zoku</span>
+                   </div>
+                   <div class="movie-thumbnail" data-title="Evangelion " data-url="keinvip.html">
+                    <img src="images/Evangelion.jpg" alt="Bildbeschreibung">
+                       <span>Evangelion</span>
+                   </div>
+               </div>
+           </div>
+           
+           <div class="movie-section" id="hollywood">
+               <h2>Bollywood 🎬</h2>
+               <div class="movie-container">
+                   <div class="movie-thumbnail" data-title="in Guten Wie In Schweren Tagen " data-url="Hollywood/mia.html">
+                    <img src="images/ro.jpg" alt="Bildbeschreibung">
+                       <span>In Guten Wie In Schweren Tagen</span>
+                   </div>
+                   <div class="movie-thumbnail" data-title="My Name Is Khan " data-url="info.html">
+                    <img src="images/lool.jpg" alt="Bildbeschreibung">
+                       <span>My Name Is Khan</span>
+                   </div>
+                   <div class="movie-thumbnail" data-title="MOHABBATEIN " data-url="info.html">
+                    <img src="images/lio.jpg" alt="Bildbeschreibung">
+                       <span>MOHABBATEIN</span>
+                   </div>
+                   <div class="movie-thumbnail" data-title="Kuch Kuch Hota Hai " data-url="Hollywood/sia.html">
+                    <img src="images/lion.jpg" alt="Bildbeschreibung">
+                       <span>Kuch Kuch Hota Hai </span>
+                   </div>
+                   <div class="movie-thumbnail" data-title="Pathan " data-url="info.html">
+                    <img src="images/rio.jpg" alt="Bildbeschreibung">
+                       <span>Pathan</span>
+                   </div>
+               </div>
+           </div>
+
+           <div class="movie-section" id="kinderfilme">
+                <h2>Kinderfilme 🎈</h2>
+                <div class="movie-container">
+                    <div class="movie-thumbnail" data-title="Der König der Löwen " data-url="info.html">
+                        <img src="images/könig.jpg" alt="Bildbeschreibung">
+                        <span>Der König der Löwen</span>
+                    </div>
+                    <div class="movie-thumbnail" data-title="Wonka " data-url="info.html">
+                        <img src="images/Wonka.jpg" alt="Bildbeschreibung">
+                        <span>Wonka</span>
+                    </div>
+                    <div class="movie-thumbnail" data-title="Wish " data-url="info.html">
+                        <img src="images/Wish.jpg" alt="Bildbeschreibung">
+                        <span>Wish</span>
+                    </div>
+                    <div class="movie-thumbnail" data-title="Zoomania " data-url="info.html">
+                        <img src="images/Zoomania.jpg" alt="Bildbeschreibung">
+                        <span>Zoomania</span>
+                    </div>
+                    <div class="movie-thumbnail" data-title="Minions " data-url="info.html">
+                        <img src="images/Minions.jpg" alt="Bildbeschreibung">
+                        <span>Minions</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="nav-arrows">
+                <a href="index.html" id="left-arrow"><i class="fas fa-arrow-left"></i></a>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        const movieThumbnails = document.querySelectorAll('.movie-thumbnail');
+        const searchInput = document.getElementById('search-input');
+        const searchButton = document.getElementById('search-button'); // Hinzugefügt
+        const noResults = document.getElementById('no-results');
+        const codeButton = document.getElementById('code-button');
+        const accessCodeInput = document.getElementById('access-code');
+        const codeEntry = document.getElementById('code-entry');
+        const mainContent = document.getElementById('main-content');
+        
+        const correctCode = "4321"; // Der richtige Zugangscode
+    
+        codeButton.addEventListener('click', () => {
+            const enteredCode = accessCodeInput.value;
+            if (enteredCode === correctCode) {
+                codeEntry.style.display = 'none';
+                mainContent.style.display = 'block';
+            } else {
+                alert('Falscher Zugangscode. Bitte versuchen Sie es erneut.');
+            }
+        });
+    
+        accessCodeInput.addEventListener('keydown', (event) => {
+            if (event.key === 'Enter') {
+                codeButton.click();
+            }
+        });
+    
+        movieThumbnails.forEach(thumbnail => {
+            thumbnail.addEventListener('click', () => {
+                const movieUrl = thumbnail.getAttribute('data-url');
+                window.location.href = movieUrl;
+            });
+        });
+    
+        searchButton.addEventListener('click', () => { // Hinzugefügt
+            const query = searchInput.value.toLowerCase();
+            const sections = document.querySelectorAll('.movie-section');
+            let totalMatches = 0;
+    
+            sections.forEach(section => {
+                let hasMatch = false;
+                const thumbnails = section.querySelectorAll('.movie-thumbnail');
+                thumbnails.forEach(thumbnail => {
+                    const title = thumbnail.getAttribute('data-title').toLowerCase();
+                    if (title.includes(query)) {
+                        thumbnail.style.display = 'block';
+                        hasMatch = true;
+                        totalMatches++;
+                    } else {
+                        thumbnail.style.display = 'none';
+                    }
+                });
+                section.style.display = hasMatch ? 'block' : 'none';
+            });
+    
+            noResults.style.display = totalMatches === 0 ? 'block' : 'none';
+        });
+    
+        searchInput.addEventListener('keydown', (event) => {
+            if (event.key === 'Enter') {
+                searchButton.click();
+            }
+        });
+    </script>    
+</body>
+</html>

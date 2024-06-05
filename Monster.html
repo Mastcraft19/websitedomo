@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Monster</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* Dein CSS-Code hier */
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Monster 👹</h1>
+        <button class="back-button" onclick="window.location.href='index.html'">Zurück 🤞</button>
+    </header>
+
+    <div class="content">
+        <img src="images/monster.jpg" alt="Anime Poster" class="poster">
+        <div class="info">
+            <h2>Monster</h2>
+            <p><strong>Veröffentlichungsdatum:</strong> 2004</p>
+            <p><strong>Genres:</strong> Mystery, Drama, Psychological, Thriller</p>
+            <p><strong>Beschreibung:</strong> Dr. Kenzo Tenma, ein brillanter Neurochirurg, trifft eine folgenschwere Entscheidung, als er das Leben eines jungen Jungen namens Johan rettet. Jahre später stellt sich heraus, dass dieser Junge ein psychopathischer Serienmörder geworden ist. Tenma macht sich auf die Suche nach Johan, um seine Taten zu stoppen und die Wahrheit aufzudecken.</p>
+            <p><strong>Bewertung:</strong> 8.7/10 (basierend auf 987.654 Bewertungen)</p>
+            <p><strong>Regie:</strong> Masayuki Kojima</p>
+            <p><strong>Dauer:</strong> 74 Episoden (je ca. 24 Minuten)</p>
+        </div>
+    </div>
+
+    <main>
+        <div class="episode-section">
+            <h2>Staffel 1</h2>
+            <div class="episode-container" id="season1">
+                <button class="episode-button" data-url="suioo.html">Episode 1</button>
+                <button class="episode-button" data-url="info.html">Episode 2</button>
+                <!-- Füge hier die restlichen Episoden-Buttons für Staffel 1 hinzu -->
+                <button class="episode-button" data-url="info.html">Episode 3</button>
+            </div>
+        </div>
+
+        <div class="episode-section">
+            <h2>Weiter</h2>
+            <div class="episode-container" id="season2">
+                <button class="episode-button" data-url="info.html">Episode 4</button>
+                <button class="episode-button" data-url="info.html">Episode 5</button>
+                <!-- Füge hier die restlichen Episoden-Buttons für Staffel 2 hinzu -->
+                <button class="episode-button" data-url="info.html">Episode 6</button>
+                <button class="episode-button" data-url="info.html">Episode 7</button>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        const episodeButtons = document.querySelectorAll('.episode-button');
+
+        episodeButtons.forEach(button => {
+            const url = button.getAttribute('data-url');
+            button.addEventListener('click', () => {
+                window.location.href = url;
+            });
+        });
+    </script>
+    <style>
+      /* Allgemeine Stile */
+body {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #000; /* Schwarz */
+    color: #0f0; /* Grün */
+    overflow-x: hidden;
+}
+
+header {
+    background-color: #000;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 2px 5px rgba(0, 0, 255, 0.3); /* Blauer Schatten */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+header h1 {
+    font-size: 2.5em;
+    font-weight: 700;
+    margin: 0;
+    color: #0f0; /* Grün */
+    text-shadow: 2px 2px 4px rgba(0, 255, 0, 0.5); /* Hellgrüner Schatten */
+}
+
+.back-button {
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 25px;
+    background-color: #000; /* Schwarz */
+    color: #0f0; /* Grün */
+    cursor: pointer;
+    transition: background-color 0.3s;
+    box-shadow: 0 2px 5px rgba(0, 0, 255, 0.3); /* Blauer Schatten */
+}
+
+.back-button:hover {
+    background-color: #444; /* Dunkleres Schwarz */
+}
+
+.content {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    margin: 20px;
+    gap: 20px;
+}
+
+.poster {
+    width: 30%;
+    max-width: 400px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 255, 0.5); /* Blauer Schatten */
+}
+
+.info {
+    flex: 1;
+    font-size: 1.2em;
+    line-height: 1.5;
+}
+
+.info h2 {
+    font-size: 2em;
+    font-weight: 700;
+    margin-top: 0;
+    margin-bottom: 10px;
+    text-shadow: 2px 2px 4px rgba(0, 255, 0, 0.5); /* Hellgrüner Schatten */
+}
+
+.info p {
+    margin-bottom: 10px;
+}
+
+.info strong {
+    color: #e50914; /* Rotes */
+}
+
+.episode-section {
+    padding: 20px;
+}
+
+.episode-section h2 {
+    font-size: 1.8em;
+    margin-bottom: 20px;
+    font-weight: 700;
+    text-shadow: 2px 2px 4px rgba(0, 255, 0, 0.5); /* Hellgrüner Schatten */
+}
+
+.episode-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.episode-button {
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    background-color: #000; /* Schwarz */
+    color: #0f0; /* Grün */
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+.episode-button:hover {
+    background-color: #444; /* Dunkleres Schwarz */
+    transform: scale(1.05);
+}
+
+/* Scrollbar styles */
+.episode-container::-webkit-scrollbar {
+    height: 12px;
+}
+
+.episode-container::-webkit-scrollbar-track {
+    background: #000; /* Schwarz */
+}
+
+.episode-container::-webkit-scrollbar-thumb {
+    background-color: #0f0; /* Grün */
+    border-radius: 6px;
+    border: 3px solid #000; /* Schwarz */
+}
+
+.episode-container::-webkit-scrollbar-thumb:hover {
+    background-color: #4f4; /* Helleres Grün */
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+    header h1 {
+        font-size: 2em;
+    }
+
+    .content {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .poster {
+        width: 60%;
+        max-width: none;
+    }
+
+    .info {
+        font-size: 1em;
+    }
+}
+
+@media (max-width: 480px) {
+    header h1 {
+        font-size: 1.5em;
+    }
+
+    .poster {
+        width: 80%;
+    }
+}
+
+    </style>
+</body>
+</html>

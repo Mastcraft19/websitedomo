@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ChillBase - VIP UIAAA</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:400,600&display=swap">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #000; /* Schwarzer Hintergrund */
+      color: #0f0; /* Grün */
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+    
+    header {
+      background-color: #000; /* Schwarzer Hintergrund */
+      padding: 20px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    header h1 {
+      margin: 0;
+      font-size: 28px;
+      font-weight: 600;
+      color: #0f0; /* Grün */
+    }
+    
+    header button {
+      background-color: #0f0; /* Grün */
+      color: #000; /* Schwarzer Text */
+      border: none;
+      padding: 10px 25px;
+      border-radius: 5px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background-color 0.3s, transform 0.3s;
+    }
+    
+    header button:hover {
+      background-color: #007700; /* Dunkleres Grün */
+      transform: scale(1.05);
+    }
+    
+    .main-content {
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      margin: 20px 0;
+      padding: 0 40px;
+      text-align: center;
+      background: linear-gradient(135deg, rgba(0, 255, 0, 0.7), rgba(0, 0, 0, 0.7)); /* Verlauf von Grün zu Schwarz */
+      border-radius: 10px;
+      box-shadow: 0 4px 20px rgba(0, 255, 0, 0.8); /* Grüner Schatten */
+    }
+    
+    .main-content h2 {
+      font-size: 36px;
+      margin-bottom: 20px;
+      color: #0f0; /* Grün */
+    }
+    
+    .main-content p {
+      font-size: 20px;
+      margin-bottom: 30px;
+      max-width: 600px;
+      color: #0f0; /* Grün */
+    }
+    
+    .crown-icon {
+      font-size: 80px;
+      color: #0f0; /* Grün */
+      margin-bottom: 20px;
+    }
+    
+    .vip-highlight {
+      color: #ff0; /* Gelb */
+      font-weight: 600;
+    }
+    
+    footer {
+      text-align: center;
+      padding: 20px;
+      background-color: #000; /* Schwarzer Hintergrund */
+      color: #0f0; /* Grün */
+    }
+    
+  </style>
+</head>
+<body>
+  <header>
+    <h1>ChillBase 🛋️</h1>
+    <button onclick="location.href='index.html'">Zurück 🤞</button>
+  </header>
+  <div class="main-content">
+    <div class="crown-icon">
+      <i class="fas fa-crown"></i>
+    </div>
+    <h2>Kein VIP-Zugang 😔</h2>
+    <p>Es tut uns leid, aber Sie haben keinen <span class="vip-highlight">VIP-Zugang</span>. Bitte kommen Sie später wieder, um exklusive Inhalte und Vorteile zu genießen.</p>
+  </div>
+  <footer>
+    <p>© ChillBase 2024</p>
+  </footer>
+</body>
+</html>
